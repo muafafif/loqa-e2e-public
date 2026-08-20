@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>LOQA — Logo v6 · Silhouette-First</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      background:#04030b;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      min-height:100vh;display:flex;flex-direction:column;
+      align-items:center;padding:72px 40px 100px;gap:64px;
+      color:rgba(255,255,255,.14);
+    }
+    .section{display:flex;flex-direction:column;align-items:center;gap:44px;width:100%;max-width:960px}
+    .section-title{font-size:9px;letter-spacing:.28em;text-transform:uppercase;font-weight:600}
+    .sub{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-top:-32px}
+    .row{display:flex;align-items:flex-end;justify-content:center;gap:56px;flex-wrap:wrap}
+    .col{display:flex;flex-direction:column;align-items:center;gap:12px}
+    .label{font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:rgba(255,255,255,.14)}
+    .divider{width:100%;max-width:720px;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent)}
+
+    /* Stress-test cards */
+    .card-white{background:#fff;border-radius:14px;padding:20px 28px;display:flex;align-items:center;gap:14px}
+    .card-white .wt{font-size:20px;font-weight:700;letter-spacing:-.05em;color:#2e1065}
+    .card-stamp{
+      background:#f5f0e8;border-radius:14px;padding:20px 28px;
+      display:flex;align-items:center;gap:14px;
+      filter:contrast(1.1) saturate(0);
+    }
+    .card-stamp .wt{font-size:20px;font-weight:700;letter-spacing:-.05em;color:#1a1a1a}
+    .card-dark{background:#0f0a1e;border-radius:14px;padding:20px 28px;display:flex;align-items:center;gap:14px}
+    .card-dark .wt{font-size:20px;font-weight:700;letter-spacing:-.05em;color:#ede9fe}
+
+    @keyframes breathe{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+    @keyframes glint{
+      0%,85%,100%{opacity:0;transform:scale(.3)}
+      89%{opacity:.95;transform:scale(1.4) rotate(12deg)}
+      94%{opacity:.4;transform:scale(.7)}
+      97%{opacity:.8;transform:scale(1.1) rotate(8deg)}
+    }
+    .glow{animation:breathe 5s ease-in-out infinite}
+    .glint{animation:glint 7s ease-in-out infinite}
+    .glint2{animation:glint 7s ease-in-out infinite;animation-delay:-3s}
+  </style>
+</head>
+<body>
+
+<!--
+  PHILOSOPHY — v6
+  ═══════════════
+  Design the SILHOUETTE first. The mark must be:
+  1. Recognisable as a single flat shape
+  2. Readable at 16px and 512px
+  3. Drawable from memory in ~5 strokes
+
+  The concept: a rough diamond crystal SHARD —
+  an asymmetric hexagon with one dominant "break"
+  edge, like a cleaved gemstone.
+
+  NOT a perfect diamond (♦) — that's generic.
+  NOT a complex multi-polygon — that loses brand recall.
+
+  The shape: 6-point irregular polygon.
+  One notch cut into it (the "cleave line") —
+  this is the signature element that makes it
+  distinct from every other diamond/gem mark.
+
+  Reading the shape:
+  · Top-left corner: sharpest, highest — the apex
+  · Right side: fuller, heavier — weight of knowledge
+  · Bottom: truncated, not pointed — grounded
+  · The cleave: a diagonal cut across the face
+    → reads as "insight cutting through"
+
+  In 3D: add depth, facets, glow.
+  In 2D: the silhouette alone carries the brand.
+-->
+
+<!-- ══════════════════════════════════════════
+     STEP 1 — THE SILHOUETTE
+     Pure flat shape. This is the brand asset.
+══════════════════════════════════════════ -->
+<div class="section">
+  <span class="section-title">Step 1 — Silhouette (Brand Foundation)</span>
+  <span class="sub">If this shape isn't memorable, nothing else matters.</span>
+
+  <div class="row" style="align-items:center;gap:48px">
+
+    <!-- Pure silhouette — white on dark -->
+    <div class="col">
+      <svg width="120" height="120" viewBox="0 0 100 100" fill="none">
+        <!--
+          THE SHARD MARK — 6-point irregular gem
+          Apex:    A = (28, 8)   ← sharpest, highest
+          Top-R:   B = (72, 18)
+          Right:   C = (82, 52)
+          Bot-R:   D = (64, 88)
+          Bot-L:   E = (22, 80)
+          Left:    F = (12, 42)
+
+          Cleave notch: cuts between B→C with internal
+          ridge at G=(58, 35) and H=(68, 58)
+          This is what makes the shape unique.
+        -->
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="white"/>
+        <!-- The cleave line — signature cut -->
+        <line x1="28" y1="8" x2="64" y2="88"
+          stroke="#04030b" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">White on Dark</span>
+    </div>
+
+    <!-- Silhouette — dark on white -->
+    <div class="col">
+      <svg width="120" height="120" viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="22" fill="white"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="#2e1065"/>
+        <line x1="28" y1="8" x2="64" y2="88"
+          stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">Dark on White</span>
+    </div>
+
+    <!-- Silhouette — outline only -->
+    <div class="col">
+      <svg width="120" height="120" viewBox="0 0 100 100" fill="none">
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5"
+          stroke-linejoin="round"/>
+        <line x1="28" y1="8" x2="64" y2="88"
+          stroke="rgba(255,255,255,.7)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">Outline</span>
+    </div>
+
+    <!-- Silhouette — tiny 20px -->
+    <div class="col">
+      <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42" fill="white"/>
+        <line x1="28" y1="8" x2="64" y2="88"
+          stroke="#04030b" stroke-width="7" stroke-linecap="round"/>
+      </svg>
+      <span class="label">20px</span>
+    </div>
+
+    <!-- Silhouette — app icon rounded -->
+    <div class="col">
+      <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="22" fill="#2e1065"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42" fill="white"/>
+        <line x1="28" y1="8" x2="64" y2="88"
+          stroke="#2e1065" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">App Icon Flat</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     STEP 2 — STRESS TESTS
+     Can the shape survive real-world conditions?
+══════════════════════════════════════════ -->
+<div class="section">
+  <span class="section-title">Step 2 — Stress Tests</span>
+
+  <div class="row" style="gap:32px;align-items:center;flex-wrap:wrap">
+
+    <!-- Stamp / mono -->
+    <div class="col">
+      <div class="card-stamp">
+        <svg width="28" height="32" viewBox="0 0 100 100" fill="none">
+          <polygon points="28,8 72,18 82,52 64,88 22,80 12,42" fill="#1a1a1a"/>
+          <line x1="28" y1="8" x2="64" y2="88"
+            stroke="#f5f0e8" stroke-width="4.5" stroke-linecap="round"/>
+        </svg>
+        <span class="wt">LOQA</span>
+      </div>
+      <span class="label">Stamp / Monochrome</span>
+    </div>
+
+    <!-- On white -->
+    <div class="col">
+      <div class="card-white">
+        <svg width="28" height="32" viewBox="0 0 100 100" fill="none">
+          <polygon points="28,8 72,18 82,52 64,88 22,80 12,42" fill="#4c1d95"/>
+          <line x1="28" y1="8" x2="64" y2="88"
+            stroke="white" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <span class="wt">LOQA</span>
+      </div>
+      <span class="label">On White</span>
+    </div>
+
+    <!-- Tiny favicon 16px -->
+    <div class="col">
+      <div style="background:#fff;border-radius:4px;padding:6px">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none">
+          <rect width="100" height="100" rx="18" fill="#4c1d95"/>
+          <polygon points="28,8 72,18 82,52 64,88 22,80 12,42" fill="white"/>
+          <line x1="28" y1="8" x2="64" y2="88"
+            stroke="#4c1d95" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="label">16px Favicon</span>
+    </div>
+
+    <!-- Emboss simulation -->
+    <div class="col">
+      <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="22" fill="#d4c5f9"/>
+        <!-- Emboss: light source top-left → highlight top edges, shadow bottom -->
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="#c4b5fd"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.5"
+          stroke-linejoin="round"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(0,0,0,.2)" stroke-width=".8"
+          stroke-linejoin="round"
+          stroke-dasharray="0"
+          transform="translate(.5,.5)"/>
+        <line x1="28" y1="8" x2="64" y2="88"
+          stroke="rgba(255,255,255,.6)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="28.8" y1="9" x2="64.8" y2="89"
+          stroke="rgba(0,0,0,.15)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">Emboss</span>
+    </div>
+
+    <!-- Reversed / negative -->
+    <div class="col">
+      <div style="background:#7c3aed;border-radius:14px;padding:16px 20px">
+        <svg width="32" height="36" viewBox="0 0 100 100" fill="none">
+          <polygon points="28,8 72,18 82,52 64,88 22,80 12,42" fill="white"/>
+          <line x1="28" y1="8" x2="64" y2="88"
+            stroke="#7c3aed" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="label">Reversed on Brand</span>
+    </div>
+
+    <!-- Engraved / etched -->
+    <div class="col">
+      <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="22" fill="#1a1430"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(167,139,250,.5)" stroke-width="1.8"
+          stroke-linejoin="round"/>
+        <line x1="28" y1="8" x2="64" y2="88"
+          stroke="rgba(167,139,250,.5)" stroke-width="1.8" stroke-linecap="round"/>
+        <!-- Top edges catch more light when engraved -->
+        <polyline points="12,42 28,8 72,18"
+          fill="none" stroke="rgba(196,181,253,.7)" stroke-width="1"
+          stroke-linejoin="round"/>
+      </svg>
+      <span class="label">Engraved</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     STEP 3 — FULL 3D (built on the silhouette)
+     Now we add depth, knowing the base is solid.
+══════════════════════════════════════════ -->
+<div class="section">
+  <span class="section-title">Step 3 — Full 3D App Icon</span>
+
+  <div class="row" style="align-items:center;gap:72px">
+
+    <!-- Hero 160px -->
+    <div class="col">
+    <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Background -->
+        <radialGradient id="v6bg" cx="42" cy="36" r="110" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#130828"/>
+          <stop offset="100%" stop-color="#050110"/>
+        </radialGradient>
+
+        <!--
+          Shard mark scaled to 160×160:
+          A=(45,13) B=(115,29) C=(131,83) D=(102,141) E=(35,128) F=(19,67)
+          Cleave: A→D (diagonal ridge splitting left/right halves)
+        -->
+
+        <!-- Left half (faces slightly away from light) -->
+        <linearGradient id="v6-lh" x1="19" y1="13" x2="70" y2="141" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#8b5cf6"/>
+          <stop offset="40%"  stop-color="#6d28d9"/>
+          <stop offset="100%" stop-color="#2e1065"/>
+        </linearGradient>
+
+        <!-- Right half (faces light — brighter) -->
+        <linearGradient id="v6-rh" x1="45" y1="13" x2="131" y2="141" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#f5f3ff"/>
+          <stop offset="20%"  stop-color="#c4b5fd"/>
+          <stop offset="55%"  stop-color="#8b5cf6"/>
+          <stop offset="100%" stop-color="#4c1d95"/>
+        </linearGradient>
+
+        <!-- Sheen on right half -->
+        <linearGradient id="v6-sh" x1="45" y1="13" x2="95" y2="70" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="white" stop-opacity=".62"/>
+          <stop offset="50%"  stop-color="white" stop-opacity=".10"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- Cleave ridge glow (the signature line) -->
+        <linearGradient id="v6-cleave" x1="45" y1="13" x2="102" y2="141" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="white" stop-opacity=".95"/>
+          <stop offset="35%"  stop-color="white" stop-opacity=".70"/>
+          <stop offset="70%"  stop-color="white" stop-opacity=".30"/>
+          <stop offset="100%" stop-color="white" stop-opacity=".08"/>
+        </linearGradient>
+
+        <!-- Top edge spectral -->
+        <linearGradient id="v6-spec" x1="45" y1="13" x2="115" y2="29" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#f0abfc" stop-opacity=".9"/>
+          <stop offset="50%"  stop-color="#a78bfa" stop-opacity=".75"/>
+          <stop offset="100%" stop-color="#6366f1" stop-opacity=".3"/>
+        </linearGradient>
+
+        <!-- Ambient glow -->
+        <radialGradient id="v6-amb" cx="80" cy="80" r="72" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#7c3aed" stop-opacity=".7"/>
+          <stop offset="50%"  stop-color="#5b21b6" stop-opacity=".25"/>
+          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Inner light bloom (around cleave) -->
+        <radialGradient id="v6-bloom" cx="73" cy="77" r="35" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#c4b5fd" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+        </radialGradient>
+
+        <filter id="v6-2xl" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="16"/></filter>
+        <filter id="v6-xl"  x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+        <filter id="v6-lg"  x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
+        <filter id="v6-md"  x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.8"/></filter>
+        <filter id="v6-sm"  x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.4"/></filter>
+      </defs>
+
+      <rect width="160" height="160" rx="36" fill="url(#v6bg)"/>
+
+      <!-- Ambient glow -->
+      <ellipse cx="80" cy="80" rx="68" ry="64"
+        fill="url(#v6-amb)" filter="url(#v6-2xl)" class="glow"/>
+
+      <!--
+        LEFT HALF: polygon A-F-E-D  (A=45,13  F=19,67  E=35,128  D=102,141)
+        RIGHT HALF: polygon A-B-C-D (A=45,13  B=115,29  C=131,83  D=102,141)
+        Cleave ridge: A→D
+      -->
+
+      <!-- Left half -->
+      <polygon points="45,13 19,67 35,128 102,141" fill="url(#v6-lh)"/>
+
+      <!-- Right half -->
+      <polygon points="45,13 115,29 131,83 102,141" fill="url(#v6-rh)"/>
+
+      <!-- Sheen on right half -->
+      <polygon points="45,13 115,29 131,83 102,141" fill="url(#v6-sh)"/>
+
+      <!-- Inner bloom along cleave -->
+      <ellipse cx="73" cy="77" rx="32" ry="42" fill="url(#v6-bloom)" filter="url(#v6-lg)"/>
+
+      <!-- ── EDGES ── -->
+      <!-- Outer silhouette edges -->
+      <!-- Top-left edge (F→A) -->
+      <line x1="19" y1="67" x2="45" y2="13"
+        stroke="rgba(255,255,255,.28)" stroke-width="1.2"/>
+      <!-- Top edge (A→B) — spectral -->
+      <line x1="45" y1="13" x2="115" y2="29"
+        stroke="url(#v6-spec)" stroke-width="1.8"/>
+      <!-- Right edge (B→C) -->
+      <line x1="115" y1="29" x2="131" y2="83"
+        stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+      <!-- Bottom-right (C→D) -->
+      <line x1="131" y1="83" x2="102" y2="141"
+        stroke="rgba(255,255,255,.07)" stroke-width=".9"/>
+      <!-- Bottom-left (D→E) -->
+      <line x1="102" y1="141" x2="35" y2="128"
+        stroke="rgba(255,255,255,.07)" stroke-width=".9"/>
+      <!-- Left edge (E→F) -->
+      <line x1="35" y1="128" x2="19" y2="67"
+        stroke="rgba(255,255,255,.10)" stroke-width=".9"/>
+
+      <!-- ── CLEAVE RIDGE — the signature line ── -->
+      <!-- Glow behind cleave -->
+      <line x1="45" y1="13" x2="102" y2="141"
+        stroke="white" stroke-opacity=".18" stroke-width="10"
+        filter="url(#v6-md)" stroke-linecap="round"/>
+      <!-- The ridge itself -->
+      <line x1="45" y1="13" x2="102" y2="141"
+        stroke="url(#v6-cleave)" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- ── APEX — top-left corner (A = 45,13) ── -->
+      <circle cx="45" cy="13" r="16"
+        fill="#c4b5fd" fill-opacity=".20" filter="url(#v6-lg)"/>
+      <circle cx="45" cy="13" r="6"
+        fill="white" fill-opacity=".22" filter="url(#v6-sm)"/>
+      <circle cx="45" cy="13" r="2.8"
+        fill="white" fill-opacity=".96"/>
+
+      <!-- ── GLINTS ── -->
+      <!-- Top-right corner (B = 115,29) -->
+      <g class="glint" transform="translate(115,29)">
+        <line x1="0" y1="-8" x2="0" y2="8"   stroke="white" stroke-width="1.3" stroke-opacity=".9"/>
+        <line x1="-8" y1="0" x2="8" y2="0"   stroke="white" stroke-width="1.3" stroke-opacity=".9"/>
+        <line x1="-4" y1="-4" x2="4" y2="4"  stroke="white" stroke-width=".6"  stroke-opacity=".5"/>
+        <line x1="4"  y1="-4" x2="-4" y2="4" stroke="white" stroke-width=".6"  stroke-opacity=".5"/>
+        <circle r="1.8" fill="white" fill-opacity=".95"/>
+        <circle r="6" fill="white" fill-opacity=".14" filter="url(#v6-sm)"/>
+      </g>
+
+      <!-- Mid-cleave glint (where cleave crosses center ~73,77) -->
+      <g class="glint2" transform="translate(73,77)">
+        <line x1="0" y1="-5" x2="0" y2="5"  stroke="white" stroke-width=".9" stroke-opacity=".8"/>
+        <line x1="-5" y1="0" x2="5" y2="0"  stroke="white" stroke-width=".9" stroke-opacity=".8"/>
+        <circle r="1.2" fill="white" fill-opacity=".85"/>
+      </g>
+
+    </svg>
+    <span class="label">App Icon — 160px</span>
+    </div>
+
+    <!-- 64px -->
+    <div class="col">
+    <svg width="64" height="64" viewBox="0 0 160 160" fill="none">
+      <rect width="160" height="160" rx="36" fill="url(#v6bg)"/>
+      <ellipse cx="80" cy="80" rx="68" ry="64" fill="url(#v6-amb)" filter="url(#v6-2xl)" class="glow"/>
+      <polygon points="45,13 19,67 35,128 102,141" fill="url(#v6-lh)"/>
+      <polygon points="45,13 115,29 131,83 102,141" fill="url(#v6-rh)"/>
+      <polygon points="45,13 115,29 131,83 102,141" fill="url(#v6-sh)"/>
+      <line x1="45" y1="13" x2="115" y2="29" stroke="url(#v6-spec)" stroke-width="2"/>
+      <line x1="19" y1="67" x2="45"  y2="13" stroke="rgba(255,255,255,.28)" stroke-width="1.2"/>
+      <line x1="45" y1="13" x2="102" y2="141" stroke="white" stroke-opacity=".15" stroke-width="8" filter="url(#v6-md)" stroke-linecap="round"/>
+      <line x1="45" y1="13" x2="102" y2="141" stroke="url(#v6-cleave)" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="45" cy="13" r="3" fill="white" fill-opacity=".96"/>
+      <g class="glint" transform="translate(115,29)">
+        <line x1="0" y1="-7" x2="0" y2="7" stroke="white" stroke-width="1.3" stroke-opacity=".9"/>
+        <line x1="-7" y1="0" x2="7" y2="0" stroke="white" stroke-width="1.3" stroke-opacity=".9"/>
+        <circle r="1.8" fill="white" fill-opacity=".95"/>
+      </g>
+    </svg>
+    <span class="label">64px</span>
+    </div>
+
+    <!-- 32px -->
+    <div class="col">
+    <svg width="32" height="32" viewBox="0 0 160 160" fill="none">
+      <rect width="160" height="160" rx="36" fill="#0d0422"/>
+      <polygon points="45,13 19,67 35,128 102,141" fill="#6d28d9"/>
+      <polygon points="45,13 115,29 131,83 102,141" fill="url(#v6-rh)"/>
+      <line x1="45" y1="13" x2="115" y2="29" stroke="url(#v6-spec)" stroke-width="3"/>
+      <line x1="45" y1="13" x2="102" y2="141" stroke="white" stroke-opacity=".9" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="45" cy="13" r="5" fill="white"/>
+    </svg>
+    <span class="label">32px</span>
+    </div>
+
+    <!-- 16px -->
+    <div class="col">
+    <svg width="20" height="20" viewBox="0 0 160 160" fill="none">
+      <rect width="160" height="160" rx="36" fill="#0d0422"/>
+      <polygon points="45,13 19,67 35,128 102,141" fill="#7c3aed"/>
+      <polygon points="45,13 115,29 131,83 102,141" fill="#c4b5fd"/>
+      <line x1="45" y1="13" x2="102" y2="141" stroke="white" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="45" cy="13" r="7" fill="white"/>
+    </svg>
+    <span class="label">16px</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     LOCKUPS — same viewBox trick
+══════════════════════════════════════════ -->
+<div class="section">
+  <span class="section-title">Lockups</span>
+
+  <div class="row" style="gap:48px;align-items:center">
+
+    <!-- Dark horizontal -->
+    <div class="col">
+    <div style="display:flex;align-items:center;gap:16px">
+      <svg width="44" height="44" viewBox="0 0 160 160" fill="none">
+        <rect width="160" height="160" rx="36" fill="url(#v6bg)"/>
+        <polygon points="45,13 19,67 35,128 102,141" fill="url(#v6-lh)"/>
+        <polygon points="45,13 115,29 131,83 102,141" fill="url(#v6-rh)"/>
+        <polygon points="45,13 115,29 131,83 102,141" fill="url(#v6-sh)"/>
+        <line x1="45" y1="13" x2="115" y2="29" stroke="url(#v6-spec)" stroke-width="2"/>
+        <line x1="19" y1="67" x2="45"  y2="13" stroke="rgba(255,255,255,.28)" stroke-width="1.2"/>
+        <line x1="45" y1="13" x2="102" y2="141" stroke="url(#v6-cleave)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="45" cy="13" r="3" fill="white" fill-opacity=".96"/>
+        <g class="glint" transform="translate(115,29)">
+          <line x1="0" y1="-6" x2="0" y2="6" stroke="white" stroke-width="1.2" stroke-opacity=".9"/>
+          <line x1="-6" y1="0" x2="6" y2="0" stroke="white" stroke-width="1.2" stroke-opacity=".9"/>
+          <circle r="1.6" fill="white" fill-opacity=".95"/>
+        </g>
+      </svg>
+      <svg width="120" height="44" viewBox="0 0 120 44" fill="none">
+        <defs>
+          <linearGradient id="v6wm" x1="0" y1="0" x2="120" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#ede9fe"/>
+            <stop offset="50%"  stop-color="#c4b5fd"/>
+            <stop offset="100%" stop-color="#a78bfa"/>
+          </linearGradient>
+        </defs>
+        <text x="0" y="36"
+          font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+          font-size="36" font-weight="700" letter-spacing="-1.8"
+          fill="url(#v6wm)">LOQA</text>
+      </svg>
+    </div>
+    <span class="label">Horizontal — Dark</span>
+    </div>
+
+    <!-- Light horizontal -->
+    <div class="col">
+    <div class="card-white">
+      <!-- Crystal only, no bg — viewBox crops to mark area -->
+      <svg width="32" height="38" viewBox="12 8 125 138" fill="none">
+        <defs>
+          <linearGradient id="v6-lh-lt" x1="19" y1="13" x2="70" y2="141" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#7c3aed"/>
+            <stop offset="100%" stop-color="#3b0764"/>
+          </linearGradient>
+          <linearGradient id="v6-rh-lt" x1="45" y1="13" x2="131" y2="141" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#c4b5fd"/>
+            <stop offset="40%"  stop-color="#8b5cf6"/>
+            <stop offset="100%" stop-color="#4c1d95"/>
+          </linearGradient>
+          <linearGradient id="v6-cl-lt" x1="45" y1="13" x2="102" y2="141" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="white" stop-opacity=".9"/>
+            <stop offset="100%" stop-color="white" stop-opacity=".2"/>
+          </linearGradient>
+          <linearGradient id="v6-sp-lt" x1="45" y1="13" x2="115" y2="29" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"  stop-color="#c026d3"/>
+            <stop offset="100%" stop-color="#7c3aed" stop-opacity=".4"/>
+          </linearGradient>
+          <filter id="v6-sm-lt"><feGaussianBlur stdDeviation="1.5"/></filter>
+        </defs>
+        <polygon points="45,13 19,67 35,128 102,141" fill="url(#v6-lh-lt)"/>
+        <polygon points="45,13 115,29 131,83 102,141" fill="url(#v6-rh-lt)"/>
+        <line x1="45" y1="13" x2="115" y2="29" stroke="url(#v6-sp-lt)" stroke-width="2"/>
+        <line x1="19" y1="67" x2="45"  y2="13" stroke="rgba(255,255,255,.35)" stroke-width="1.2"/>
+        <!-- Cleave with drop shadow on white -->
+        <line x1="45.5" y1="14" x2="102.5" y2="142"
+          stroke="rgba(0,0,0,.08)" stroke-width="3" stroke-linecap="round"/>
+        <line x1="45" y1="13" x2="102" y2="141"
+          stroke="url(#v6-cl-lt)" stroke-width="2" stroke-linecap="round"/>
+        <!-- Drop shadow -->
+        <ellipse cx="73" cy="142" rx="30" ry="4"
+          fill="#7c3aed" fill-opacity=".10" filter="url(#v6-sm-lt)"/>
+        <!-- Apex -->
+        <circle cx="45" cy="13" r="3" fill="white" fill-opacity=".9"/>
+        <!-- Glint -->
+        <g class="glint" transform="translate(115,29)">
+          <line x1="0" y1="-6" x2="0" y2="6"  stroke="#7c3aed" stroke-width="1.2" stroke-opacity=".8"/>
+          <line x1="-6" y1="0" x2="6" y2="0"  stroke="#7c3aed" stroke-width="1.2" stroke-opacity=".8"/>
+          <circle r="1.6" fill="#7c3aed" fill-opacity=".9"/>
+        </g>
+      </svg>
+      <span class="wt">LOQA</span>
+    </div>
+    <span class="label">Horizontal — Light</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     BRAND RECALL — "Can you draw it?"
+══════════════════════════════════════════ -->
+<div class="section">
+  <span class="section-title">Brand Recall — 5-Stroke Redraw Test</span>
+  <span class="sub">A strong logo can be drawn from memory. These are the 5 strokes.</span>
+
+  <div class="row" style="gap:36px;align-items:center">
+    <!-- Stroke 1: left edge -->
+    <div class="col">
+      <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
+        <polyline points="19,67 28,8" stroke="rgba(255,255,255,.5)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span class="label">① Left edge</span>
+    </div>
+    <!-- Stroke 2: top + right -->
+    <div class="col">
+      <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
+        <polyline points="28,8 72,18 82,52" stroke="rgba(255,255,255,.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span class="label">② Top + right</span>
+    </div>
+    <!-- Stroke 3: bottom -->
+    <div class="col">
+      <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
+        <polyline points="82,52 64,88 22,80 12,42" stroke="rgba(255,255,255,.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span class="label">③ Bottom</span>
+    </div>
+    <!-- Stroke 4: close -->
+    <div class="col">
+      <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
+        <line x1="12" y1="42" x2="19" y2="67" stroke="rgba(255,255,255,.5)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span class="label">④ Close</span>
+    </div>
+    <!-- Stroke 5: cleave — the signature -->
+    <div class="col">
+      <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
+        <polygon points="28,8 72,18 82,52 64,88 22,80 12,42"
+          fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.5" stroke-linejoin="round"/>
+        <line x1="28" y1="8" x2="64" y2="88"
+          stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="28" cy="8" r="3" fill="white"/>
+      </svg>
+      <span class="label">⑤ Cleave — signature</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<span class="label" style="font-size:7px;letter-spacing:.1em;color:rgba(255,255,255,.07)">
+  LOQA — design-lab/logo-v6.html
+</span>
+
+</body>
+</html>

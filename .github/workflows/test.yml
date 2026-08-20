@@ -1,0 +1,55 @@
+name: Test — LOQA API
+
+# Manual-only untuk sekarang (workflow_dispatch) — JANGAN tambah trigger
+# `push`/`pull_request` sampai repo pindah dari GitHub Free tier, biar tidak
+# makan kuota Actions minutes. Aktifkan trigger otomatis di TODO.md § Production
+# Readiness saat sudah siap.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  go-test:
+    name: apps/api · go test
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: loqa
+          POSTGRES_PASSWORD: loqa
+          POSTGRES_DB: loqa_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U loqa"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    defaults:
+      run:
+        working-directory: apps/api
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/api/go.mod
+          cache-dependency-path: apps/api/go.sum
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: gofmt check
+        run: |
+          diff <(gofmt -l .) <(echo -n "") || (echo "gofmt found unformatted files — run 'gofmt -w .'" && exit 1)
+
+      - name: go test (unit + integration)
+        env:
+          DATABASE_URL: postgres://loqa:loqa@localhost:5432/loqa_test?sslmode=disable
+        run: go test ./... -v

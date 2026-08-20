@@ -1,0 +1,329 @@
+name: Build Installers
+
+on:
+  # Push trigger dinonaktifkan sementara — aktifkan kembali saat billing sudah siap.
+  # push:
+  #   branches: [main]
+  #   tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DRAFT — Edit bagian ini untuk mengubah apa yang di-build
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+#   APP yang di-build:
+#     personal   → LOQA Home   (port 8000)
+#     business   → LOQA Work   (port 8001)
+#
+#   PLATFORM yang di-build:
+#     mac-arm64      → macOS Apple Silicon (M1/M2/M3)  — runner: macos-latest
+#     mac-x64        → macOS Intel                      — runner: macos-13
+#     windows-cpu    → Windows, semua PC                — runner: windows-latest
+#     windows-cuda   → Windows, NVIDIA GPU              — runner: windows-latest
+#
+#   Cara mengaktifkan/menonaktifkan:
+#     - Tambah atau hapus baris di matrix.include di KEDUA job (build-backend dan build-tauri)
+#     - Pastikan label yang sama ada di kedua job agar artifact bisa diteruskan
+#
+#   Konfigurasi saat ini:
+#     ✅ business · mac-arm64
+#     ✅ business · windows-cpu
+#     ✗  business · mac-x64
+#     ✗  business · windows-cuda
+#     ✗  personal · (semua platform)
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+jobs:
+  # ── Tahap 1: Build backend binary ───────────────────────────────────────────
+  build-backend:
+    name: Backend · ${{ matrix.label }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # ▼▼▼ EDIT DI SINI — tambah/hapus platform ▼▼▼
+
+          - label: business-mac-arm64
+            app: business
+            runner: macos-latest
+            cuda: false
+            binary: loqa-work-backend
+
+          - label: business-windows-cpu
+            app: business
+            runner: windows-latest
+            cuda: false
+            binary: loqa-work-backend.exe
+
+          # Contoh — hapus tanda '#' untuk mengaktifkan:
+
+          # - label: business-mac-x64
+          #   app: business
+          #   runner: macos-13
+          #   cuda: false
+          #   binary: loqa-work-backend
+
+          # - label: business-windows-cuda
+          #   app: business
+          #   runner: windows-latest
+          #   cuda: true
+          #   binary: loqa-work-backend.exe
+
+          # - label: personal-mac-arm64
+          #   app: personal
+          #   runner: macos-latest
+          #   cuda: false
+          #   binary: loqa-home-backend
+
+          # - label: personal-mac-x64
+          #   app: personal
+          #   runner: macos-13
+          #   cuda: false
+          #   binary: loqa-home-backend
+
+          # - label: personal-windows-cpu
+          #   app: personal
+          #   runner: windows-latest
+          #   cuda: false
+          #   binary: loqa-home-backend.exe
+
+          # - label: personal-windows-cuda
+          #   app: personal
+          #   runner: windows-latest
+          #   cuda: true
+          #   binary: loqa-home-backend.exe
+
+          # ▲▲▲ EDIT DI SINI ▲▲▲
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: apps/${{ matrix.app }}/backend/requirements.txt
+
+      - name: Install llama-cpp-python (CPU)
+        if: ${{ !matrix.cuda }}
+        shell: bash
+        run: |
+          pip install llama-cpp-python==0.3.23 \
+            --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu \
+            --prefer-binary
+
+      - name: Install llama-cpp-python (CUDA)
+        if: ${{ matrix.cuda }}
+        shell: bash
+        run: |
+          pip install llama-cpp-python==0.3.23 \
+            --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu121 \
+            --prefer-binary --force-reinstall
+
+      - name: Install backend deps
+        shell: bash
+        run: |
+          cd apps/${{ matrix.app }}/backend
+          pip install pyinstaller
+          pip install -r requirements.txt
+
+      - name: Build backend binary
+        shell: bash
+        run: |
+          cd apps/${{ matrix.app }}/backend
+          pyinstaller build_backend.spec --noconfirm --clean
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backend-${{ matrix.label }}
+          path: apps/${{ matrix.app }}/backend/dist/${{ matrix.binary }}
+          retention-days: 1
+
+  # ── Tahap 2: Build Tauri installer ──────────────────────────────────────────
+  build-tauri:
+    name: Tauri · ${{ matrix.label }}
+    needs: build-backend
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # ▼▼▼ EDIT DI SINI — harus sama persis dengan matrix di build-backend ▼▼▼
+
+          - label: business-mac-arm64
+            app: business
+            runner: macos-latest
+            cuda: false
+            binary: loqa-work-backend
+
+          - label: business-windows-cpu
+            app: business
+            runner: windows-latest
+            cuda: false
+            binary: loqa-work-backend.exe
+
+          # Contoh — hapus tanda '#' untuk mengaktifkan:
+
+          # - label: business-mac-x64
+          #   app: business
+          #   runner: macos-13
+          #   cuda: false
+          #   binary: loqa-work-backend
+
+          # - label: business-windows-cuda
+          #   app: business
+          #   runner: windows-latest
+          #   cuda: true
+          #   binary: loqa-work-backend.exe
+
+          # - label: personal-mac-arm64
+          #   app: personal
+          #   runner: macos-latest
+          #   cuda: false
+          #   binary: loqa-home-backend
+
+          # - label: personal-mac-x64
+          #   app: personal
+          #   runner: macos-13
+          #   cuda: false
+          #   binary: loqa-home-backend
+
+          # - label: personal-windows-cpu
+          #   app: personal
+          #   runner: windows-latest
+          #   cuda: false
+          #   binary: loqa-home-backend.exe
+
+          # - label: personal-windows-cuda
+          #   app: personal
+          #   runner: windows-latest
+          #   cuda: true
+          #   binary: loqa-home-backend.exe
+
+          # ▲▲▲ EDIT DI SINI ▲▲▲
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/${{ matrix.app }}/frontend/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/${{ matrix.app }}/tauri-app/src-tauri -> target
+          key: ${{ matrix.label }}
+
+      - name: Install frontend deps
+        working-directory: apps/${{ matrix.app }}/frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: apps/${{ matrix.app }}/frontend
+        run: npm run build
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: backend-${{ matrix.label }}
+          path: apps/${{ matrix.app }}/tauri-app/src-tauri/
+
+      - name: Make backend executable (macOS)
+        if: ${{ !contains(matrix.runner, 'windows') }}
+        run: chmod +x apps/${{ matrix.app }}/tauri-app/src-tauri/${{ matrix.binary }}
+
+      # ── Install Tauri CLI lalu build langsung ────────────────────────────────
+      # Tidak pakai tauri-apps/tauri-action karena struktur monorepo menyebabkan
+      # beforeBuildCommand di tauri.conf.json konflik dengan frontend yang sudah di-build.
+      - name: Cache Tauri CLI
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/cargo-tauri
+          key: tauri-cli-1-${{ matrix.runner }}
+
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli --version "^1" --locked
+
+      - name: Patch tauri.conf.json
+        working-directory: apps/${{ matrix.app }}/tauri-app
+        shell: bash
+        run: node patch-conf.js "${{ matrix.binary }}"
+
+      - name: Build Tauri app (macOS)
+        if: ${{ !contains(matrix.runner, 'windows') }}
+        working-directory: apps/${{ matrix.app }}/tauri-app
+        run: cargo tauri build
+
+      - name: Build Tauri app (Windows)
+        if: ${{ contains(matrix.runner, 'windows') }}
+        working-directory: apps/${{ matrix.app }}/tauri-app
+        shell: bash
+        run: cargo tauri build
+
+      # ── Upload hasil installer ─────────────────────────────────────────────
+      - name: Upload macOS installer
+        if: ${{ !contains(matrix.runner, 'windows') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.label }}
+          path: apps/${{ matrix.app }}/tauri-app/src-tauri/target/release/bundle/dmg/*.dmg
+          retention-days: 7
+
+      - name: Upload Windows installer
+        if: ${{ contains(matrix.runner, 'windows') && !matrix.cuda }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.label }}
+          path: apps/${{ matrix.app }}/tauri-app/src-tauri/target/release/bundle/nsis/*-setup.exe
+          retention-days: 7
+
+      - name: Upload Windows CUDA installer
+        if: ${{ contains(matrix.runner, 'windows') && matrix.cuda }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.label }}
+          path: apps/${{ matrix.app }}/tauri-app/src-tauri/target/release/bundle/nsis/*-setup-cuda.exe
+          retention-days: 7
+
+      # ── Buat GitHub Release jika push tag v* ──────────────────────────────
+      - name: Upload ke GitHub Release (macOS)
+        if: ${{ startsWith(github.ref, 'refs/tags/v') && !contains(matrix.runner, 'windows') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          name: LOQA ${{ github.ref_name }}
+          body: |
+            ## LOQA ${{ github.ref_name }}
+
+            ### LOQA Work
+            | Platform | File |
+            |----------|------|
+            | macOS Apple Silicon | `LOQA Work_*_aarch64.dmg` |
+            | macOS Intel | `LOQA Work_*_x64.dmg` |
+            | Windows (CPU) | `LOQA Work_*_x64-setup.exe` |
+            | Windows (NVIDIA GPU) | `LOQA Work_*_x64-setup-cuda.exe` |
+
+            > **macOS:** Klik kanan → Open saat pertama kali membuka (belum ada code signing).
+            > **Windows:** Klik "More info" → "Run anyway" jika muncul peringatan SmartScreen.
+          files: apps/${{ matrix.app }}/tauri-app/src-tauri/target/release/bundle/dmg/*.dmg
+
+      - name: Upload ke GitHub Release (Windows)
+        if: ${{ startsWith(github.ref, 'refs/tags/v') && contains(matrix.runner, 'windows') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: apps/${{ matrix.app }}/tauri-app/src-tauri/target/release/bundle/nsis/*-setup*.exe

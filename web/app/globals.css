@@ -1,0 +1,113 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #111111;
+  --border: #222222;
+  --muted-foreground: #a1a1aa;
+  --accent: #8B5CF6;
+  --radius: 0.75rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+/* Shimmer sweep animation */
+@keyframes shimmer-sweep {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #a1a1aa 0%,
+    #ffffff 30%,
+    #ffffff 50%,
+    #a1a1aa 80%,
+    #a1a1aa 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-sweep 4s linear infinite;
+}
+
+/* Gradient border utility */
+.card-border {
+  position: relative;
+  background: var(--card);
+  border-radius: var(--radius);
+}
+.card-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.5) 0%,
+    rgba(139, 92, 246, 0.05) 50%,
+    rgba(139, 92, 246, 0.2) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Glow effects */
+.glow-accent {
+  box-shadow: 0 0 80px -20px rgba(139, 92, 246, 0.4);
+}
+.glow-accent-sm {
+  box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.25);
+}
+
+/* Radial gradient background */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(139, 92, 246, 0.15) 0%, transparent 70%),
+    var(--background);
+}
+
+/* Grid dot pattern */
+.dot-pattern {
+  background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Typing indicator dots */
+@keyframes typing-dot {
+  0%, 60%, 100% { opacity: 0.2; transform: translateY(0); }
+  30%           { opacity: 1;   transform: translateY(-3px); }
+}

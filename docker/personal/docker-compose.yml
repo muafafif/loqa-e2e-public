@@ -1,0 +1,45 @@
+name: loqa-personal
+
+services:
+  personal-backend:
+    build:
+      context: ../..           # repo root — so COPY paths work
+      dockerfile: docker/personal/Dockerfile.backend
+    container_name: loqa-personal-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Models: preserved on `down`, removed only on `down-purge`
+      - personal_models:/app/models
+      # Data: preserved on `down`, removed on `down-clean` and `down-purge`
+      - personal_data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  personal-frontend:
+    build:
+      context: ../..
+      dockerfile: docker/personal/Dockerfile.frontend
+    container_name: loqa-personal-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      personal-backend:
+        condition: service_healthy
+
+volumes:
+  # Models volume — NEVER removed by `down` or `down-clean`, only by `down-purge`
+  personal_models:
+    name: loqa-personal-models
+
+  # Data volume — preserved on `down`, removed by `down-clean` and `down-purge`
+  personal_data:
+    name: loqa-personal-data

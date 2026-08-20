@@ -1,0 +1,46 @@
+# ── Stage 1: builder ──────────────────────────────────────────────────────────
+# Compile llama-cpp-python and other C-extension wheels separately
+# so the final image doesn't need build tools.
+FROM python:3.11-slim AS builder
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential cmake git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+
+COPY apps/personal/backend/requirements.txt .
+
+# llama-cpp-python: CPU-only build (no CUDA/Metal in Docker by default).
+# Set CMAKE_ARGS to enable CUDA if NVIDIA Container Runtime is available:
+#   CMAKE_ARGS="-DLLAMA_CUDA=on"
+ENV CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS"
+ENV FORCE_CMAKE=1
+
+RUN pip install --upgrade pip && \
+    pip install --prefix=/install --no-cache-dir -r requirements.txt
+
+
+# ── Stage 2: runtime ──────────────────────────────────────────────────────────
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgomp1 libopenblas0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy installed packages from builder
+COPY --from=builder /install /usr/local
+
+WORKDIR /app
+
+# Copy application code only (no .venv, no data, no models)
+COPY apps/personal/backend/app ./app
+
+# Data and models are mounted as volumes at runtime — never baked into image.
+# /app/data  → SQLite DBs, chromadb, documents, settings
+# /app/models → downloaded GGUF / embed / reranker files
+RUN mkdir -p /app/data /app/models/chat /app/models/embed /app/models/reranker
+
+EXPOSE 8000
+
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--log-level", "info"]

@@ -1,0 +1,94 @@
+<svg width="320" height="64" viewBox="0 0 320 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="d-bg" cx="17" cy="14" r="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#130828"/>
+      <stop offset="100%" stop-color="#050110"/>
+    </radialGradient>
+    <linearGradient id="d-lh" x1="8" y1="5" x2="28" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="40%" stop-color="#6d28d9"/>
+      <stop offset="100%" stop-color="#2e1065"/>
+    </linearGradient>
+    <linearGradient id="d-rh" x1="18" y1="5" x2="53" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f5f3ff"/>
+      <stop offset="20%" stop-color="#c4b5fd"/>
+      <stop offset="55%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="d-sh" x1="18" y1="5" x2="38" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="white" stop-opacity=".62"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="d-cv" x1="18" y1="5" x2="41" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="white" stop-opacity=".95"/>
+      <stop offset="35%" stop-color="white" stop-opacity=".70"/>
+      <stop offset="70%" stop-color="white" stop-opacity=".30"/>
+      <stop offset="100%" stop-color="white" stop-opacity=".08"/>
+    </linearGradient>
+    <linearGradient id="d-sp" x1="18" y1="5" x2="46" y2="12" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0abfc" stop-opacity=".9"/>
+      <stop offset="50%" stop-color="#a78bfa" stop-opacity=".75"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity=".3"/>
+    </linearGradient>
+    <radialGradient id="d-amb" cx="32" cy="32" r="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity=".6"/>
+      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="d-f-xl" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="d-f-md" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.2"/></filter>
+    <filter id="d-f-sm" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation=".6"/></filter>
+    <!-- Wordmark gradient -->
+    <linearGradient id="d-wm" x1="76" y1="8" x2="200" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ede9fe"/>
+      <stop offset="50%" stop-color="#c4b5fd"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon: 64×64 rounded box -->
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="url(#d-bg)"/>
+  <ellipse cx="32" cy="32" rx="27" ry="26" fill="url(#d-amb)" filter="url(#d-f-xl)"/>
+
+  <!--
+    Mark scaled to 64×64 (factor 0.4 of 160):
+    A(18,5) B(46,12) C(52,33) D(41,56) E(14,51) F(8,27)
+    Left half:  A-F-E-D
+    Right half: A-B-C-D
+    Cleave: A→D
+  -->
+  <polygon points="18,5 8,27 14,51 41,56" fill="url(#d-lh)"/>
+  <polygon points="18,5 46,12 52,33 41,56" fill="url(#d-rh)"/>
+  <polygon points="18,5 46,12 52,33 41,56" fill="url(#d-sh)"/>
+
+  <!-- Edges -->
+  <line x1="8"  y1="27" x2="18" y2="5"  stroke="rgba(255,255,255,.28)" stroke-width=".6"/>
+  <line x1="18" y1="5"  x2="46" y2="12" stroke="url(#d-sp)" stroke-width=".8"/>
+  <line x1="46" y1="12" x2="52" y2="33" stroke="rgba(255,255,255,.12)" stroke-width=".5"/>
+  <line x1="52" y1="33" x2="41" y2="56" stroke="rgba(255,255,255,.07)" stroke-width=".4"/>
+  <line x1="41" y1="56" x2="14" y2="51" stroke="rgba(255,255,255,.07)" stroke-width=".4"/>
+  <line x1="14" y1="51" x2="8"  y2="27" stroke="rgba(255,255,255,.10)" stroke-width=".4"/>
+
+  <!-- Cleave glow -->
+  <line x1="18" y1="5" x2="41" y2="56"
+    stroke="white" stroke-opacity=".15" stroke-width="4"
+    filter="url(#d-f-md)" stroke-linecap="round"/>
+  <!-- Cleave -->
+  <line x1="18" y1="5" x2="41" y2="56"
+    stroke="url(#d-cv)" stroke-width=".9" stroke-linecap="round"/>
+
+  <!-- Apex A(18,5) -->
+  <circle cx="18" cy="5" r="1.2" fill="white" fill-opacity=".96"/>
+
+  <!-- Glint B(46,12) -->
+  <g transform="translate(46,12)">
+    <line x1="0" y1="-3.5" x2="0" y2="3.5" stroke="white" stroke-width=".6" stroke-opacity=".9"/>
+    <line x1="-3.5" y1="0" x2="3.5" y2="0" stroke="white" stroke-width=".6" stroke-opacity=".9"/>
+    <circle r=".8" fill="white" fill-opacity=".95"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="80" y="47"
+    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif"
+    font-size="42" font-weight="700" letter-spacing="-2.2"
+    fill="url(#d-wm)">LOQA</text>
+</svg>

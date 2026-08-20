@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "apps": [
+    {
+      "id": "personal",
+      "name": "KnowledgeAI Personal",
+      "description": "AI knowledge base for individuals. Chat with your documents, manage personal finances, and more.",
+      "version": "0.1.0",
+      "icon": "personal",
+      "color": "#0284c7",
+      "status": "stable",
+      "download": {
+        "darwin_arm64": "https://github.com/your-org/knowledge-ai/releases/download/personal-v0.1.0/personal-darwin-arm64.tar.gz",
+        "darwin_x64": "https://github.com/your-org/knowledge-ai/releases/download/personal-v0.1.0/personal-darwin-x64.tar.gz",
+        "win32_x64": "https://github.com/your-org/knowledge-ai/releases/download/personal-v0.1.0/personal-win32-x64.zip",
+        "linux_x64": "https://github.com/your-org/knowledge-ai/releases/download/personal-v0.1.0/personal-linux-x64.tar.gz"
+      },
+      "size_mb": 150,
+      "changelog": "Initial release"
+    },
+    {
+      "id": "business",
+      "name": "KnowledgeAI Business",
+      "description": "AI knowledge base for teams and businesses. Corporate finance tracking, multi-department accounting, and advanced analytics.",
+      "version": "0.1.0",
+      "icon": "business",
+      "color": "#7c3aed",
+      "status": "stable",
+      "download": {
+        "darwin_arm64": "https://github.com/your-org/knowledge-ai/releases/download/business-v0.1.0/business-darwin-arm64.tar.gz",
+        "darwin_x64": "https://github.com/your-org/knowledge-ai/releases/download/business-v0.1.0/business-darwin-x64.tar.gz",
+        "win32_x64": "https://github.com/your-org/knowledge-ai/releases/download/business-v0.1.0/business-win32-x64.zip",
+        "linux_x64": "https://github.com/your-org/knowledge-ai/releases/download/business-v0.1.0/business-linux-x64.tar.gz"
+      },
+      "size_mb": 150,
+      "changelog": "Initial release"
+    }
+  ]
+}

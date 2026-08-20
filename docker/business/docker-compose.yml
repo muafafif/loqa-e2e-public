@@ -1,0 +1,43 @@
+name: loqa-business
+
+services:
+  business-backend:
+    build:
+      context: ../..
+      dockerfile: docker/business/Dockerfile.backend
+    container_name: loqa-business-backend
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    volumes:
+      - business_models:/app/models
+      - business_data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  business-frontend:
+    build:
+      context: ../..
+      dockerfile: docker/business/Dockerfile.frontend
+    container_name: loqa-business-frontend
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    depends_on:
+      business-backend:
+        condition: service_healthy
+
+volumes:
+  # Models volume — NEVER removed by `down` or `down-clean`, only by `down-purge`
+  business_models:
+    name: loqa-business-models
+
+  # Data volume — preserved on `down`, removed by `down-clean` and `down-purge`
+  business_data:
+    name: loqa-business-data
